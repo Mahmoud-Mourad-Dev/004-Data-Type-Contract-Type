@@ -108,6 +108,77 @@ contract Wallet {
     }
 }
 ```
+Contracts do not support any operators.
+The members of contract types are the external functions of the contract including any state variables marked as public
+```solidity
+
+//SPDX-License-Identifier: MIT
+pragma solidity >=0.4.16 <0.9.0;
+
+contract MyContract {
+        // Public state variable
+        uint public myNumber = 42;
+
+    // Public function that is part of the contract's external interface
+    function externalFunction() public pure returns (string memory) {
+        return "This is an external function";
+    }
+}
+
+
+contract AnotherContract {
+    function callExternalFunction(MyContract contractInstance) public pure returns (string memory) {
+        return contractInstance.externalFunction();  // Accessing an external function
+    }
+
+    function getPublicVariable(MyContract contractInstance) public view returns (uint) {
+        return contractInstance.myNumber();  // Accessing a public state variable via its getter
+    }
+}
+```
+For a contract C you can use type(C) to access type information about the contract.
+In Solidity, type(C) is a built-in feature that allows you to access type information about the contract C. It provides information related to the contract type, such as its runtime properties like the contract’s creation code and runtime code. This is particularly useful for advanced functionality such as deploying contracts or analyzing contract bytecode.
+```solidity
+
+//SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract MyContract {
+    uint public value;
+
+    
+}
+
+contract Deployer {
+    function getCreationCode() public pure returns (bytes memory) {
+        return type(MyContract).creationCode;  // Returns the creation code of MyContract
+    }
+}
+```
+Getting the Contract Runtime Code:
+type(MyContract).runtimeCode provides the actual executable code for MyContract after deployment.
+This can be useful for verifying the contract code or interacting with contracts in a more low-level way
+```solidity
+//SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+pragma solidity ^0.8.0;
+
+contract MyContract {
+    uint public value;
+
+    constructor(uint _value) {
+        value = _value;
+    }
+}
+
+contract Deployer {
+    function getRuntimeCode() public pure returns (bytes memory) {
+        return type(MyContract).runtimeCode;  // Returns the runtime code of MyContract
+    }
+}
+```
+
+
 
 
 
