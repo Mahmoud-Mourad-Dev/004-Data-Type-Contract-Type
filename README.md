@@ -77,3 +77,39 @@ contract Example {
     }
 }
 ```
+Contracts can be explicitly converted to and from the address type.
+
+```solidity
+//SPDX-License-Identifier: MIT
+pragma solidity >=0.4.16 <0.9.0;
+contract MyContract {
+    // Function to get the contract's address
+    function getAddress() public view returns (address) {
+        return address(this);  // تحويل صريح من العقد إلى عنوانه
+    }
+}
+```
+Converting an Address to a Contract:
+```solidity
+//SPDX-License-Identifier: MIT
+pragma solidity >=0.4.16 <0.9.0;
+pragma solidity ^0.8.0;
+
+contract Token {
+    function balanceOf() public pure returns (uint) {
+        return 100;  // Example function to return a balance
+    }
+}
+
+contract Wallet {
+    function getTokenBalance(address tokenAddress) public pure returns (uint) {
+        Token token = Token(tokenAddress);  // Convert address to Token contract type
+        return token.balanceOf();    // Call a function on the Token contract
+    }
+}
+```
+
+
+
+
+
